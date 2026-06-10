@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Agencies from "./pages/Agencies";
 import AgencyDetail from "./pages/AgencyDetail";
@@ -46,10 +47,11 @@ export default function App() {
                                     <Route path="/register" element={<Register />} />
                                 </Routes>
                             </div>
+                            <Footer />
                         </>
                     }
                 />
-                {/* Admin routes — no Navbar */}
+                {/* Admin routes — no Navbar, no Footer */}
                 <Route
                     path="/admin/*"
                     element={
