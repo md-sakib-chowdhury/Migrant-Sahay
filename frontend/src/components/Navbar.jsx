@@ -58,6 +58,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 const NAV_LINKS = [
+    { to: "/", label: "হোম", icon: "🏠" },
     { to: "/agencies", label: "এজেন্সি", icon: "🏢" },
     { to: "/reports", label: "অভিযোগ", icon: "⚠️" },
     { to: "/forum", label: "ফোরাম", icon: "💬" },
@@ -99,9 +100,9 @@ export default function Navbar() {
                 </Link>
 
                 {/* Desktop links */}
-                <div style={{ ...styles.desktopLinks, display: isMobile ? "none" : "flex" }}>
+                <div style={{ ...styles.desktopLinks, display: isMobile ? "none" : "flex", justifyContent: "center" }}>
                     {NAV_LINKS.map(({ to, label }) => {
-                        const active = pathname.startsWith(to);
+                        const active = to === "/" ? pathname === "/" : pathname.startsWith(to);
                         return (
                             <Link
                                 key={to}
@@ -171,7 +172,7 @@ export default function Navbar() {
                 <div style={styles.drawer}>
                     <div style={styles.drawerLinks}>
                         {NAV_LINKS.map(({ to, label, icon }) => {
-                            const active = pathname.startsWith(to);
+                            const active = to === "/" ? pathname === "/" : pathname.startsWith(to);
                             return (
                                 <Link
                                     key={to}
