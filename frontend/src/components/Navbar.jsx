@@ -53,6 +53,7 @@
 //         </nav>
 //     );
 // } import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
@@ -68,6 +69,13 @@ export default function Navbar() {
     const navigate = useNavigate();
     const { pathname } = useLocation();
     const [menuOpen, setMenuOpen] = useState(false);
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth <= 768);
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
     const handleLogout = () => {
         logout();
@@ -75,15 +83,13 @@ export default function Navbar() {
         navigate("/");
     };
 
-    const initials = user?.name
-        ? user.name.charAt(0).toUpperCase()
-        : "?";
+    const initials = user?.name ? user.name.charAt(0).toUpperCase() : "?";
 
     return (
         <nav style={styles.nav}>
             <div style={styles.inner}>
 
-                {/* ── Brand ── */}
+                {/* Brand */}
                 <Link to="/" style={styles.brand} onClick={() => setMenuOpen(false)}>
                     <span style={styles.brandIcon}>🌍</span>
                     <span style={styles.brandTextWrap}>
@@ -92,8 +98,8 @@ export default function Navbar() {
                     </span>
                 </Link>
 
-                {/* ── Desktop links ── */}
-                <div style={styles.desktopLinks}>
+                {/* Desktop links */}
+                <div style={{ ...styles.desktopLinks, display: isMobile ? "none" : "flex" }}>
                     {NAV_LINKS.map(({ to, label }) => {
                         const active = pathname.startsWith(to);
                         return (
@@ -113,9 +119,9 @@ export default function Navbar() {
                     })}
                 </div>
 
-                {/* ── Desktop auth ── */}
-                <div style={styles.divider} />
-                <div style={styles.authRow}>
+                {/* Desktop auth */}
+                <div style={{ ...styles.divider, display: isMobile ? "none" : "block" }} />
+                <div style={{ ...styles.authRow, display: isMobile ? "none" : "flex" }}>
                     {user ? (
                         <>
                             {user.role === "admin" && (
@@ -140,10 +146,10 @@ export default function Navbar() {
                     )}
                 </div>
 
-                {/* ── Hamburger ── */}
+                {/* Hamburger */}
                 <button
                     onClick={() => setMenuOpen(o => !o)}
-                    style={styles.hamburger}
+                    style={{ ...styles.hamburger, display: isMobile ? "flex" : "none" }}
                     aria-label="Toggle menu"
                 >
                     {menuOpen ? (
@@ -160,8 +166,8 @@ export default function Navbar() {
                 </button>
             </div>
 
-            {/* ── Mobile Drawer ── */}
-            {menuOpen && (
+            {/* Mobile Drawer */}
+            {menuOpen && isMobile && (
                 <div style={styles.drawer}>
                     <div style={styles.drawerLinks}>
                         {NAV_LINKS.map(({ to, label, icon }) => {
@@ -231,7 +237,6 @@ export default function Navbar() {
     );
 }
 
-/* ─── Styles ─────────────────────────────────── */
 const styles = {
     nav: {
         background: "#0f2554",
@@ -272,18 +277,14 @@ const styles = {
         letterSpacing: "0.08em", textTransform: "uppercase", fontWeight: 500,
     },
     desktopLinks: {
-        display: "flex", alignItems: "center", gap: 2, flex: 1,
-        // hidden on mobile via CSS (add to index.css):
-        // @media (max-width: 768px) { .desktop-links { display: none !important } }
+        alignItems: "center", gap: 2, flex: 1,
     },
     navLink: {
         fontSize: 13.5, fontWeight: 500,
         padding: "6px 12px",
         borderRadius: "6px 6px 0 0",
         textDecoration: "none",
-        transition: "color .15s, background .15s",
         whiteSpace: "nowrap",
-        borderBottom: "2px solid transparent",
     },
     divider: {
         width: 1, height: 22,
@@ -291,7 +292,7 @@ const styles = {
         flexShrink: 0,
     },
     authRow: {
-        display: "flex", alignItems: "center", gap: 8, flexShrink: 0,
+        alignItems: "center", gap: 8, flexShrink: 0,
     },
     avatar: {
         width: 32, height: 32, borderRadius: "50%",
@@ -328,7 +329,7 @@ const styles = {
         padding: "6px 14px", borderRadius: 7, cursor: "pointer",
     },
     hamburger: {
-        display: "none",          // show on mobile: add @media CSS
+        alignItems: "center", justifyContent: "center",
         background: "rgba(255,255,255,0.06)",
         border: "1px solid rgba(255,255,255,0.1)",
         borderRadius: 7, padding: 8, cursor: "pointer",
