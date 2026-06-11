@@ -527,6 +527,21 @@ const styles = {
         display: "flex", alignItems: "center", gap: 10,
         textDecoration: "none", flexShrink: 0,
     },
+    brandLogoBox: {
+        width: 38, height: 38,
+        background: "linear-gradient(135deg,  #fff)",
+        borderRadius: 10,
+        display: "flex", alignItems: "center", justifyContent: "center",
+        flexShrink: 0,
+        boxShadow: "0 2px 8px rgba(245,158,11,0.35)",
+    },
+    brandMain: {
+        fontSize: 16, fontWeight: 800, color: "#fff", letterSpacing: "0.01em",
+    },
+    brandSub: {
+        fontSize: 9, color: "#f59e0b",
+        letterSpacing: "0.12em", textTransform: "uppercase", fontWeight: 600,
+    },
     // brandIcon: {
     //     width: 36, height: 36,
     //     background: "#da0bf5",
