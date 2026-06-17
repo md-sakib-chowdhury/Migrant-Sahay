@@ -193,9 +193,9 @@
 //         zIndex: 100,
 //     },
 //     inner: {
-//         maxWidth: 1200,
+//         maxWidth: 2000,
 //         margin: "0 auto",
-//         padding: "0 20px",
+//         padding: "0 18px",
 //         display: "flex",
 //         alignItems: "center",
 //         justifyContent: "space-between",
@@ -326,6 +326,20 @@ const NAV_LINKS = [
     { to: "/remittance", label: "রেমিট্যান্স", icon: "💸" },
 ];
 
+const COLORS = {
+    deep: "#0B3D2E",
+    deep2: "#0E4A38",
+    deepDrawer: "#082A20",
+    gold: "#C8973B",
+    goldSoft: "#E4C77A",
+    cream: "#FBF8F0",
+    mutedOnDark: "rgba(246,241,228,0.62)",
+    hairline: "rgba(244,231,196,0.14)",
+    red: "#D98C82",
+    redSoft: "rgba(140,47,42,0.16)",
+    redBorder: "rgba(140,47,42,0.35)",
+};
+
 export default function Navbar() {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
@@ -352,10 +366,9 @@ export default function Navbar() {
             <div style={styles.inner}>
 
                 {/* Brand */}
-                {/* Brand */}
                 <Link to="/" style={styles.brand} onClick={() => setMenuOpen(false)}>
                     <div style={styles.brandLogoBox}>
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0f2554" strokeWidth="2.2">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={COLORS.deep} strokeWidth="2.2">
                             <circle cx="12" cy="12" r="10" />
                             <path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20" />
                         </svg>
@@ -376,9 +389,9 @@ export default function Navbar() {
                                 to={to}
                                 style={{
                                     ...styles.navLink,
-                                    color: active ? "#ffffff" : "#94a3b8",
-                                    background: active ? "rgba(255,255,255,0.07)" : "transparent",
-                                    borderBottom: active ? "2px solid #f59e0b" : "2px solid transparent",
+                                    color: active ? COLORS.cream : COLORS.mutedOnDark,
+                                    background: active ? "rgba(244,231,196,0.08)" : "transparent",
+                                    borderBottom: active ? `2px solid ${COLORS.gold}` : "2px solid transparent",
                                 }}
                             >
                                 {label}
@@ -422,12 +435,12 @@ export default function Navbar() {
                 >
                     {menuOpen ? (
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                            stroke="#fff" strokeWidth="2.5">
+                            stroke={COLORS.cream} strokeWidth="2.5">
                             <path d="M18 6L6 18M6 6l12 12" />
                         </svg>
                     ) : (
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                            stroke="#94a3b8" strokeWidth="2.5">
+                            stroke={COLORS.mutedOnDark} strokeWidth="2.5">
                             <path d="M3 12h18M3 6h18M3 18h18" />
                         </svg>
                     )}
@@ -447,8 +460,8 @@ export default function Navbar() {
                                     onClick={() => setMenuOpen(false)}
                                     style={{
                                         ...styles.mobileLink,
-                                        color: active ? "#fff" : "#94a3b8",
-                                        background: active ? "rgba(255,255,255,0.07)" : "transparent",
+                                        color: active ? COLORS.cream : COLORS.mutedOnDark,
+                                        background: active ? "rgba(244,231,196,0.08)" : "transparent",
                                     }}
                                 >
                                     <span style={{ fontSize: 16 }}>{icon}</span>
@@ -463,7 +476,7 @@ export default function Navbar() {
                             <>
                                 <div style={styles.drawerProfile}>
                                     <div style={styles.avatar}>{initials}</div>
-                                    <span style={{ color: "#cbd5e1", fontSize: 14 }}>
+                                    <span style={{ color: COLORS.mutedOnDark, fontSize: 14 }}>
                                         {user.name || user.email}
                                     </span>
                                 </div>
@@ -507,21 +520,20 @@ export default function Navbar() {
 
 const styles = {
     nav: {
-        background: "#0f2554",
-        borderBottom: "1px solid rgba(255,255,255,0.08)",
+        background: COLORS.deep,
+        borderBottom: `1px solid ${COLORS.hairline}`,
         fontFamily: "'Hind Siliguri', sans-serif",
         position: "relative",
         zIndex: 100,
     },
     inner: {
-        maxWidth: "100%",
-        margin: "0 auto",
-        padding: "0 ",
+        width: "97%",
+        padding: "0 16px",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
         height: 64,
-        gap: 16,
+        gap: 8,
     },
     brand: {
         display: "flex", alignItems: "center", gap: 10,
@@ -529,104 +541,88 @@ const styles = {
     },
     brandLogoBox: {
         width: 38, height: 38,
-        background: "linear-gradient(135deg,  #fff)",
+        background: `linear-gradient(135deg, ${COLORS.gold}, ${COLORS.goldSoft})`,
         borderRadius: 10,
         display: "flex", alignItems: "center", justifyContent: "center",
         flexShrink: 0,
-        boxShadow: "0 2px 8px rgba(245,158,11,0.35)",
+        boxShadow: "0 2px 8px rgba(200,151,59,0.35)",
     },
-    brandMain: {
-        fontSize: 16, fontWeight: 800, color: "#fff", letterSpacing: "0.01em",
-    },
-    brandSub: {
-        fontSize: 9, color: "#f59e0b",
-        letterSpacing: "0.12em", textTransform: "uppercase", fontWeight: 600,
-    },
-    // brandIcon: {
-    //     width: 36, height: 36,
-    //     background: "#da0bf5",
-    //     borderRadius: 8,
-    //     display: "flex", alignItems: "center", justifyContent: "center",
-    //     fontSize: 18,
-    // },
     brandTextWrap: {
         display: "flex", flexDirection: "column", lineHeight: 1.15,
     },
     brandMain: {
-        fontSize: 15, fontWeight: 700, color: "#fff", letterSpacing: "0.01em",
+        fontSize: 15, fontWeight: 700, color: COLORS.cream, letterSpacing: "0.01em",
     },
     brandSub: {
-        fontSize: 9.5, color: "#f59e0b",
+        fontSize: 9.5, color: COLORS.goldSoft,
         letterSpacing: "0.08em", textTransform: "uppercase", fontWeight: 500,
     },
     desktopLinks: {
-        alignItems: "center",
-        gap: 2,
-        flex: 1,
+        alignItems: "center", gap: 2, flex: 1,
     },
     navLink: {
-        fontSize: 13.5, fontWeight: 500,
-        padding: "6px 12px",
+        fontSize: 13, fontWeight: 500,
+        padding: "6px 9px",
         borderRadius: "6px 6px 0 0",
         textDecoration: "none",
         whiteSpace: "nowrap",
     },
     divider: {
         width: 1, height: 22,
-        background: "rgba(255,255,255,0.12)",
+        background: COLORS.hairline,
         flexShrink: 0,
     },
     authRow: {
-        alignItems: "center", gap: 8, flexShrink: 0,
+        alignItems: "center", gap: 6, flexShrink: 0,
     },
     avatar: {
         width: 32, height: 32, borderRadius: "50%",
-        background: "rgba(245,158,11,0.15)",
-        border: "1.5px solid rgba(245,158,11,0.4)",
+        background: "rgba(200,151,59,0.16)",
+        border: `1.5px solid rgba(200,151,59,0.45)`,
         display: "flex", alignItems: "center", justifyContent: "center",
-        fontSize: 13, color: "#f59e0b", fontWeight: 700,
+        fontSize: 13, color: COLORS.goldSoft, fontWeight: 700,
     },
     adminBadge: {
         display: "flex", alignItems: "center", gap: 5,
-        background: "rgba(245,158,11,0.12)",
-        border: "1px solid rgba(245,158,11,0.28)",
-        color: "#f59e0b",
+        background: "rgba(200,151,59,0.12)",
+        border: "1px solid rgba(200,151,59,0.3)",
+        color: COLORS.goldSoft,
         fontSize: 12, fontWeight: 600,
         padding: "5px 10px", borderRadius: 6,
         textDecoration: "none",
     },
     btnLoginText: {
-        color: "#94a3b8", textDecoration: "none",
+        color: COLORS.mutedOnDark, textDecoration: "none",
         fontSize: 13.5, fontWeight: 500,
-        padding: "6px 12px", borderRadius: 6,
+        padding: "6px 8px", borderRadius: 6,
     },
     btnRegister: {
-        background: "#f59e0b", color: "#0f2554",
+        background: COLORS.gold, color: COLORS.deep,
         fontSize: 13, fontWeight: 700,
-        padding: "7px 16px", borderRadius: 7,
+        padding: "7px 13px", borderRadius: 7,
         textDecoration: "none", whiteSpace: "nowrap",
     },
     btnLogout: {
-        background: "rgba(239,68,68,0.12)",
-        border: "1px solid rgba(239,68,68,0.28)",
-        color: "#fca5a5",
+        background: COLORS.redSoft,
+        border: `1px solid ${COLORS.redBorder}`,
+        color: COLORS.red,
         fontSize: 13, fontWeight: 600,
         padding: "6px 14px", borderRadius: 7, cursor: "pointer",
     },
     hamburger: {
         alignItems: "center", justifyContent: "center",
-        background: "rgba(255,255,255,0.06)",
-        border: "1px solid rgba(255,255,255,0.1)",
+        background: "rgba(244,231,196,0.08)",
+        border: `1px solid ${COLORS.hairline}`,
         borderRadius: 7, padding: 8, cursor: "pointer",
     },
     drawer: {
-        background: "#0c2050",
-        borderTop: "1px solid rgba(255,255,255,0.08)",
+        background: COLORS.deepDrawer,
+        borderTop: `1px solid ${COLORS.hairline}`,
         padding: "12px 20px 16px",
     },
     drawerLinks: {
         display: "flex", flexDirection: "column", gap: 2,
-        borderBottom: "1px solid rgba(255,255,255,0.08)",
+        borderBottom: `1px solid ${COLORS.hairline}`,
         paddingBottom: 12, marginBottom: 12,
     },
     mobileLink: {
@@ -641,14 +637,14 @@ const styles = {
     drawerProfile: {
         display: "flex", alignItems: "center", gap: 10,
         padding: "8px 10px",
-        background: "rgba(255,255,255,0.04)",
+        background: "rgba(244,231,196,0.05)",
         borderRadius: 8, marginBottom: 4,
     },
     mobileBtnLogin: {
         flex: 1, textAlign: "center",
-        color: "#94a3b8", textDecoration: "none",
+        color: COLORS.mutedOnDark, textDecoration: "none",
         fontSize: 14, fontWeight: 500,
         padding: "10px 12px", borderRadius: 7,
-        border: "1px solid rgba(255,255,255,0.12)",
+        border: `1px solid ${COLORS.hairline}`,
     },
 };
